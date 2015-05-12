@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script type="text/javascript" src="freelancer.js"></script>
+	</head>
+	<body ng-app="app">
+	 	<div class="container" ng-controller="AppController" style="margin-left: 10px;">
+	 		<div class="row">
+	 			<div class="col-xs-12">
+	 				Izberi obrazec: <select ng-options="item.name for item in choices" ng-model="selectedObject" class="form-control"></select>
+
+	 				<form name="formWebpage" ng-if="webpage">
+ 						<label>Obrazec za spletno stran:</label>
+ 						<p>First name: <input type="text" class="form-control" name="firstname" ng-model="firstname" ng-required="true" /></p>
+ 						<p>Last name:<input type="text" class="form-control" name="lastname" ng-model="lastname" ng-required="true" /></p>
+ 						<p>Email:<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" /></p>
+ 						<p>Tel. st.:<input type="" class="form-control" name="phoneNumber" ng-model="phoneNumber" ng-required="true" /></p>
+ 						<p>Postna. st.:<input type="postNumber" class="form-control" name="postNumber" ng-model="postNumber" ng-required="true" ng-minlength="4" ng-maxlength="4" /></p>
+ 						<p>Vase želje:<textarea name="demands" ng-model="demands" class="form-control"></textarea></p>
+
+ 						<div class="text-danger">
+	 						<p ng-show="(formTest.firstname.$error.required && formTest.firstname.$touched) || (formTest.lastname.$error.required && formTest.lastname.$touched)">To polje je obvezno!</p>
+	 					</div>
+	 				</form>
+
+	 				<form name="formAngular" ng-if="angular">
+ 						<label>Obrazec za angular:</label>
+ 						<p>First name: <input type="text" class="form-control" name="firstname" ng-model="firstname" ng-required="true" /></p>
+ 						<p>Last name:<input type="text" class="form-control" name="lastname" ng-model="lastname" ng-required="true" /></p>
+ 						<p>Email:<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" /></p>
+ 						<p>Tel. st.:<input type="" class="form-control" name="phoneNumber" ng-model="phoneNumber" ng-required="true" /></p>
+ 						<p>Postna. st.:<input type="postNumber" class="form-control" name="postNumber" ng-model="postNumber" ng-required="true" ng-minlength="4" ng-maxlength="4" /></p>
+
+ 						<div class="text-danger">
+	 						<p ng-show="(formTest.firstname.$error.required && formTest.firstname.$touched) || (formTest.lastname.$error.required && formTest.lastname.$touched)">To polje je obvezno!</p>
+	 					</div>
+	 				</form>
+
+ 					<form name="formQuery" ng-if="query">
+ 						<label>Obrazec za query:</label>
+ 						<p>First name: <input type="text" class="form-control" name="firstname" ng-model="firstname" ng-required="true" /></p>
+ 						<p>Last name:<input type="text" class="form-control" name="lastname" ng-model="lastname" ng-required="true" /></p>
+ 						<p>Email:<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" /></p>
+ 						<p>Tel. st.:<input type="" class="form-control" name="phoneNumber" ng-model="phoneNumber" ng-required="true" /></p>
+ 						<p>Postna. st.:<input type="postNumber" class="form-control" name="postNumber" ng-model="postNumber" ng-required="true" ng-minlength="4" ng-maxlength="4" /></p>
+ 						<p>Komentar:<textarea ng-model="comment" name="comment" ng-required="true" class="form-control"></textarea></p>
+
+ 						<div class="text-danger">
+	 						<p ng-show="(formTest.firstname.$error.required && formTest.firstname.$touched) || (formTest.lastname.$error.required && formTest.lastname.$touched)">To polje je obvezno!</p>
+	 					</div>
+ 					</form>
+
+	 				<button class="btn btn-primary" ng-click="allOk" ng-disabled="formTest.$invalid">Oddaj!</button>
+	 			</div>
+	 		</div>
+	 	</div>
+	</body>
+</html>
