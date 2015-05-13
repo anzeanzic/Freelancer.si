@@ -30,7 +30,7 @@ angular.module('app').controller('AppController', function($scope) {
 		}
 	});
 
-	$scope.allOk = function() {
+	$scope.submitForm = function() {
 		alert("Obrazec uspesno oddan!")
 	}
 });

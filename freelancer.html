@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<meta charset="UTF-8">
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
@@ -7,55 +8,126 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
 		<script type="text/javascript" src="freelancer.js"></script>
+		<style>
+			.header { margin-top: 20px; }
+			.well { margin-top: 20px; }
+			select { width: 250px !important; }
+			button { margin-top: 10px; }
+			.well label { width: 160px; }
+			input { width: 50% !important; display: inline-block !important; }
+			span { display: inline-block; }
+		</style>
 	</head>
 	<body ng-app="app">
 	 	<div class="container" ng-controller="AppController" style="margin-left: 10px;">
 	 		<div class="row">
 	 			<div class="col-xs-12">
-	 				Izberi obrazec: <select ng-options="item.name for item in choices" ng-model="selectedObject" class="form-control"></select>
+	 				<h1>Freelancer.si</h1>
+	 				<div class="header">
+		 				<label>Izberi vrsto povpraševanja:</label> 
+		 				<select ng-options="item.name for item in choices" ng-model="selectedObject" class="form-control"></select>
+		 			</div>
 
-	 				<form name="formWebpage" ng-if="webpage">
- 						<label>Obrazec za spletno stran:</label>
- 						<p>First name: <input type="text" class="form-control" name="firstname" ng-model="firstname" ng-required="true" /></p>
- 						<p>Last name:<input type="text" class="form-control" name="lastname" ng-model="lastname" ng-required="true" /></p>
- 						<p>Email:<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" /></p>
- 						<p>Tel. st.:<input type="" class="form-control" name="phoneNumber" ng-model="phoneNumber" ng-required="true" /></p>
- 						<p>Postna. st.:<input type="postNumber" class="form-control" name="postNumber" ng-model="postNumber" ng-required="true" ng-minlength="4" ng-maxlength="4" /></p>
- 						<p>Vase želje:<textarea name="demands" ng-model="demands" class="form-control"></textarea></p>
+	 				<div class="well" ng-if="webpage">
+		 				<form name="formWebpage">
+	 						<h3>Povpraševanje po spletni strani:</h3>
+	 						<p>
+	 							<label>Ime in priimek:</label>
+	 							<input type="text" class="form-control" name="name" ng-model="name" ng-required="true" />
+	 							<span class="text-danger" ng-show="formWebpage.name.$error.required && formWebpage.name.$touched">To polje je obvezno!</span>
+	 						</p>
+	 						<p>
+	 							<label>Email:</label>
+	 							<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" />
+	 							<span class="text-danger" ng-show="formWebpage.email.$error.required && formWebpage.email.$touched">To polje je obvezno!</span>
+	 							<span class="text-danger" ng-show="formWebpage.$error.email">Email ni veljaven!</span>
+	 						</p>
+	 						<p>
+	 							<label>Telefonska številka:</label>
+	 							<input type="text" class="form-control" name="phoneNumber" ng-model="phoneNumber" ng-minlength="9" ng-maxlength="9" ng-pattern="/^([0-9]{9})$/" ng-required="true" />
+	 							<span class="text-danger" ng-show="formWebpage.phoneNumber.$error.required && formWebpage.phoneNumber.$touched">To polje je obvezno!</span>
+	 							<span class="text-danger" ng-show="formWebpage.phoneNumber.$error.minlength || formWebpage.phoneNumber.$error.maxlength || formWebpage.phoneNumber.$error.pattern">Telefonska številka mora vsebovati 9 števil!</span>
+	 						</p>
+	 						<p>
+	 							<label>Vaše sporočilo:</label>
+	 							<textarea name="message" ng-model="message" class="form-control" ng-required="true"></textarea>
+	 							<span class="text-danger" ng-show="formWebpage.message.$error.required && formWebpage.message.$touched">To polje je obvezno!</span>
+	 						</p>
 
- 						<div class="text-danger">
-	 						<p ng-show="(formTest.firstname.$error.required && formTest.firstname.$touched) || (formTest.lastname.$error.required && formTest.lastname.$touched)">To polje je obvezno!</p>
-	 					</div>
-	 				</form>
+		 					<button class="btn btn-primary" ng-click="submitForm()" ng-disabled="formWebpage.$invalid">Oddaj povpraševanje!</button>
+		 				</form>
+	 				</div>
 
-	 				<form name="formAngular" ng-if="angular">
- 						<label>Obrazec za angular:</label>
- 						<p>First name: <input type="text" class="form-control" name="firstname" ng-model="firstname" ng-required="true" /></p>
- 						<p>Last name:<input type="text" class="form-control" name="lastname" ng-model="lastname" ng-required="true" /></p>
- 						<p>Email:<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" /></p>
- 						<p>Tel. st.:<input type="" class="form-control" name="phoneNumber" ng-model="phoneNumber" ng-required="true" /></p>
- 						<p>Postna. st.:<input type="postNumber" class="form-control" name="postNumber" ng-model="postNumber" ng-required="true" ng-minlength="4" ng-maxlength="4" /></p>
+	 				<div class="well" ng-if="angular">
+		 				<form name="formAngular">
+		 					<h3>Povpraševanje po AngularJS:</h3>
+	 						<p>
+	 							<label>Ime in priimek:</label>
+	 							<input type="text" class="form-control" name="name" ng-model="name" ng-required="true" />
+	 							<span class="text-danger" ng-show="formAngular.name.$error.required && formAngular.name.$touched">To polje je obvezno!</span>
+	 						</p>
+	 						<p>
+	 							<label>Naslov:</label>
+	 							<input type="text" class="form-control" name="address" ng-model="address" ng-required="true" />
+	 							<span class="text-danger" ng-show="formAngular.address.$error.required && formAngular.address.$touched">To polje je obvezno!</span>
+	 						</p>
+	 						<p>
+	 							<label>Poštna številka:</label>
+	 							<input type="text" class="form-control" name="postNumber" ng-model="postNumber" ng-required="true" ng-minlength="4" ng-maxlength="4" ng-pattern="/^([0-9]{4})$/" />
+	 							<span class="text-danger" ng-show="formAngular.postNumber.$error.required && formAngular.postNumber.$touched">To polje je obvezno!</span>
+	 							<span class="text-danger" ng-show="formAngular.postNumber.$error.minlength || formAngular.postNumber.$error.maxlength || formAngular.postNumber.$error.pattern">Poštna številka mora vsebovati 4 števila!</span>
+	 						</p>
+	 						<p>
+	 							<label>Kraj:</label>
+	 							<input type="text" class="form-control" name="place" ng-model="place" ng-required="true" />
+	 							<span class="text-danger" ng-show="formAngular.place.$error.required && formAngular.place.$touched">To polje je obvezno!</span>
+	 						</p>
+	 						<p>
+	 							<label>Email:</label>
+	 							<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" />
+	 							<span class="text-danger" ng-show="formAngular.email.$error.required && formAngular.email.$touched">To polje je obvezno!</span>
+	 							<span class="text-danger" ng-show="formAngular.$error.email">Email ni veljaven!</span>
+	 						</p>
+	 						<p>
+	 							<label>Telefonska številka:</label>
+	 							<input type="text" class="form-control" name="phoneNumber" ng-model="phoneNumber" ng-minlength="9" ng-maxlength="9" ng-pattern="/^([0-9]{9})$/" ng-required="true" />
+	 							<span class="text-danger" ng-show="formAngular.phoneNumber.$error.required && formAngular.phoneNumber.$touched">To polje je obvezno!</span>
+	 							<span class="text-danger" ng-show="formAngular.phoneNumber.$error.minlength || formAngular.phoneNumber.$error.maxlength || formAngular.phoneNumber.$error.pattern">Telefonska številka mora vsebovati 9 števil!</span>
+	 						</p>
 
- 						<div class="text-danger">
-	 						<p ng-show="(formTest.firstname.$error.required && formTest.firstname.$touched) || (formTest.lastname.$error.required && formTest.lastname.$touched)">To polje je obvezno!</p>
-	 					</div>
-	 				</form>
+		 					<button class="btn btn-primary" ng-click="submitForm()" ng-disabled="formAngular.$invalid">Oddaj povpraševanje!</button>
+		 				</form>
+	 				</div>
 
- 					<form name="formQuery" ng-if="query">
- 						<label>Obrazec za query:</label>
- 						<p>First name: <input type="text" class="form-control" name="firstname" ng-model="firstname" ng-required="true" /></p>
- 						<p>Last name:<input type="text" class="form-control" name="lastname" ng-model="lastname" ng-required="true" /></p>
- 						<p>Email:<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" /></p>
- 						<p>Tel. st.:<input type="" class="form-control" name="phoneNumber" ng-model="phoneNumber" ng-required="true" /></p>
- 						<p>Postna. st.:<input type="postNumber" class="form-control" name="postNumber" ng-model="postNumber" ng-required="true" ng-minlength="4" ng-maxlength="4" /></p>
- 						<p>Komentar:<textarea ng-model="comment" name="comment" ng-required="true" class="form-control"></textarea></p>
+	 				<div class="well" ng-if="query">
+	 					<form name="formQuery">
+	 						<h3>Povpraševanje po svetovanju:</h3>
+	 						<p>
+	 							<label>Ime in priimek:</label>
+	 							<input type="text" class="form-control" name="name" ng-model="name" ng-required="true" />
+	 							<span class="text-danger" ng-show="formQuery.name.$error.required && formQuery.name.$touched">To polje je obvezno!</span>
+	 						</p>
+	 						<p>
+	 							<label>Email:</label>
+	 							<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" />
+	 							<span class="text-danger" ng-show="formQuery.email.$error.required && formQuery.email.$touched">To polje je obvezno!</span>
+	 							<span class="text-danger" ng-show="formQuery.$error.email">Email ni veljaven!</span>
+	 						</p>
+	 						<p>
+	 							<label>Telefonska številka:</label>
+	 							<input type="text" class="form-control" name="phoneNumber" ng-model="phoneNumber" ng-minlength="9" ng-maxlength="9" ng-pattern="/^([0-9]{9})$/" ng-required="true" />
+	 							<span class="text-danger" ng-show="formQuery.phoneNumber.$error.required && formQuery.phoneNumber.$touched">To polje je obvezno!</span>
+	 							<span class="text-danger" ng-show="formQuery.phoneNumber.$error.minlength || formQuery.phoneNumber.$error.maxlength || formQuery.phoneNumber.$error.pattern">Telefonska številka mora vsebovati 9 števil!</span>
+	 						</p>
+	 						<p>
+	 							<label>Sporočilo/vprašanje:</label>
+	 							<textarea ng-model="comment" name="comment" class="form-control" ng-required="true"></textarea>
+	 							<span class="text-danger" ng-show="formQuery.comment.$error.required && formQuery.comment.$touched">To polje je obvezno!</span>
+	 						</p>
 
- 						<div class="text-danger">
-	 						<p ng-show="(formTest.firstname.$error.required && formTest.firstname.$touched) || (formTest.lastname.$error.required && formTest.lastname.$touched)">To polje je obvezno!</p>
-	 					</div>
- 					</form>
-
-	 				<button class="btn btn-primary" ng-click="allOk" ng-disabled="formTest.$invalid">Oddaj!</button>
+		 					<button class="btn btn-primary" ng-click="submitForm()" ng-disabled="formQuery.$invalid">Oddaj povpraševanje!</button>
+	 					</form>
+ 					</div>
 	 			</div>
 	 		</div>
 	 	</div>
